@@ -2,7 +2,7 @@ function eurocTransformMain()
 % read in all groundtruth data
 groun_truth_all = csvread('MH01/GroundTruthData.csv',1,0,[1,0,36382,7]);
 
-pose_vector = groun_truth_all(1, 2:8);
+pose_vector = groun_truth_all(106, 2:8);
 T_G_I = getTransformMatrix(pose_vector);
 
 T_I_G = getInverseTransform(T_G_I);
@@ -27,7 +27,11 @@ R_I_G = quat2rotm(q_I_G);
 
 p_I_G = pose_vector(1:3);
 
-T_G_I(1:3, 1:3) = R_I_G';
+% the following line should have been 
+% T_G_I(1:3, 1:3) = R_I_G'; but since matlab 
+% uses passive rotation and we are given active ones
+% we need to invert it again.
+T_G_I(1:3, 1:3) = R_I_G; 
 T_G_I(1:3, 4) = p_I_G;
 T_G_I(4, 1:4) = [0, 0, 0, 1];
 end
