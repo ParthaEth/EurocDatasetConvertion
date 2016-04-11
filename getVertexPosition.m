@@ -1,5 +1,5 @@
 function getVertexPosition()
-ground_truth_file = fopen('MH01/GroundTruthPositions.csv');
+ground_truth_file = fopen('MH_04/GroundTruthPositions.csv');
 groun_truth_all = textscan(ground_truth_file,...
     '%u64 %n %n %n', 'Delimiter',',');
 fclose(ground_truth_file);
@@ -9,7 +9,7 @@ time_offset = groun_truth_all{1, 1}(1);
 groun_truth_all{1, 1} = double(groun_truth_all{1, 1} ...
     - time_offset);
 
-id_to_time = fopen('MH01/vertex_id_to_time.csv');
+id_to_time = fopen('MH_04/vertex_id_to_time.csv');
 textscan(id_to_time,'%s', 2, 'Delimiter',',');
 vertex_id_to_time_stamp = textscan(id_to_time,...
     '%u64 %s', 'Delimiter',',');
@@ -17,7 +17,7 @@ fclose(id_to_time);
 vertex_id_to_time_stamp{1} = double(vertex_id_to_time_stamp{1} ...
     - time_offset);
 
-fid = fopen('MH01/true_vertex_id_to_position.csv', 'w');
+fid = fopen('MH_04/true_vertex_id_to_position.csv', 'w');
 
 for i=1:size(vertex_id_to_time_stamp{1}, 1)
 %     id = 
