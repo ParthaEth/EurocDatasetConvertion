@@ -116,7 +116,7 @@ for i=1:3
             RCKLAM_marginalized_vertices{8}{j}))));
         error_optvi_full_RCKLAM_marginalized(j, i) = ...
             (RCKLAM_marginalized_vertices{i}(j) - ...
-            ground_truth_vertices{i + 1}(keyframe_indices(j)))^.2;
+            ground_truth_vertices{i + 1}(keyframe_indices(j)));
     end
 end
 
