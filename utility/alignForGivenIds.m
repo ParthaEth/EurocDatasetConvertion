@@ -8,8 +8,8 @@ end
 
 aligned_other_vertices = other_vertices;
 
-params = zeros(1, 6); % Identity trnasform in the begining
-average_over_n_vertices = 5;
+params = zeros(1, 3); % Identity trnasform in the begining
+average_over_n_vertices = 3;
 
 frames_not_aligned = false;
 for i=1:length(alignment_frame_ids)
@@ -70,7 +70,7 @@ for i=1:length(alignment_frame_ids)
         varriance = var(initial_residual);
         
         for k=1:3
-            bad_index = find(abs(initial_residual(:,k) - mean_vals(k)) > 2*sqrt(varriance(k)));
+            bad_index = find(abs(initial_residual(:,k) - mean_vals(k)) > 3*sqrt(varriance(k)));
         end
         
         opt_count = 0;
@@ -89,7 +89,7 @@ for i=1:length(alignment_frame_ids)
         
         [params_new, ~, ~, exitflag, ~] = ...
             lsqcurvefit(@transform3dPoints, ...
-            params, xdata_optimization, xdata_optimization);
+            params, xdata_optimization, ydata_optimization);
         if(exitflag > 0)
             params = params_new;
         end
@@ -119,6 +119,6 @@ end
 end
 
 function ydata = transform3dPoints(params, xdata)
-R_B_G = eul2rotm(params(1:3));
-ydata = (R_B_G * xdata' + repmat(params(4:6)', 1, size(xdata, 1)))';
+R_B_G = eye(3);
+ydata = (R_B_G * xdata' + repmat(params(1:3)', 1, size(xdata, 1)))';
 end
