@@ -1,6 +1,6 @@
 function aligned_other_vertices = ....
     alignAgainstGroundframe(ground_truth_vertices, ...
-    align_every_nt_frame, ...
+    align_every_nth_frame, ...
     other_vertices, visualize)
 % finds the best transform so every nth vertex of given two sequence of
 % vertices is aligned.
@@ -9,14 +9,14 @@ if nargin < 4
 end
 aligned_other_vertices = zeros(size(ground_truth_vertices));
 
-average_over_n_vertices = min(20, align_every_nt_frame);
+average_over_n_vertices = min(20, align_every_nth_frame);
 numframes = length(ground_truth_vertices);
 
 params = zeros(1, 6); % Identity trnasform in the begining
-for i = 1:align_every_nt_frame:numframes
-    if( i + align_every_nt_frame < numframes)
-        xdata = other_vertices(i:i + align_every_nt_frame, :);
-        ydata = ground_truth_vertices(i:i + align_every_nt_frame, :);
+for i = 1:align_every_nth_frame:numframes
+    if( i + align_every_nth_frame < numframes)
+        xdata = other_vertices(i:i + align_every_nth_frame, :);
+        ydata = ground_truth_vertices(i:i + align_every_nth_frame, :);
     else
         xdata = other_vertices(i:numframes, :);
         ydata = ground_truth_vertices(i:numframes, :);
